@@ -1,0 +1,135 @@
+/* Story deck. 1920 x 1080 canvas. Colours are roles, not decoration: keep one colour per role across every slide. */
+:root {
+  --ink: #1B2430;      /* text */
+  --muted: #8A919A;    /* secondary text, axes */
+  --rule: #E4E6E9;     /* grid lines, separators */
+  --bg: #FFFFFF;
+  --ours: #12827A;     /* the method you defend */
+  --ctrl: #9AA0A6;     /* the control (untrained copy, ablation) */
+  --base: #E3A008;     /* the simple baseline */
+  --ref: #1B2430;      /* published reference models */
+  --a: #C80F2E;        /* domain colour 1 (e.g. one team / class) */
+  --b: #1B3F7A;        /* domain colour 2 */
+  --c: #F5B301;        /* domain colour 3 (e.g. the ball / the key object) */
+  --enc: #44505C;      /* method parts in schematics */
+  --pred: #6D4A9E;
+  --loss: #9C3D7E;
+}
+
+html, body { background: var(--bg); }
+.reveal { font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--ink); font-size: 44px; font-weight: 400; letter-spacing: -0.01em; }
+.reveal .slides { text-align: left; }
+.reveal .slides section { padding: 0; height: 100%; box-sizing: border-box; }
+.reveal .slides > section { top: 0 !important; }
+
+/* type scale: one idea per slide, big */
+.reveal h1, .reveal h2, .reveal h3 { margin: 0; font-weight: 600; letter-spacing: -0.025em; line-height: 1.05; color: var(--ink); text-transform: none; }
+.reveal h1 { font-size: 132px; }
+.reveal h2 { font-size: 72px; }
+.reveal h3 { font-size: 48px; font-weight: 500; }
+.reveal p { margin: 0; line-height: 1.3; }
+.kicker { font-size: 26px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; }
+.sub { color: var(--muted); }
+.ours { color: var(--ours); }
+
+/* slide frame: generous margins, title top-left, stage below */
+.frame { position: absolute; inset: 96px 128px 88px 128px; }
+.frame > header { position: absolute; top: 0; left: 0; right: 0; }
+.stage { position: absolute; left: 0; right: 0; top: 190px; bottom: 0; }
+.stage svg { width: 100%; height: 100%; overflow: visible; }
+.foot { position: absolute; left: 0; right: 0; bottom: 0; font-size: 28px; color: var(--muted); line-height: 1.3; }
+
+/* SVG text */
+svg text { font-family: inherit; fill: var(--ink); }
+svg .lbl { font-size: 30px; }
+svg .lbl-s { font-size: 24px; fill: var(--muted); }
+svg .lbl-b { font-size: 34px; font-weight: 600; }
+
+/* builds: .b is hidden until the slide's step reaches its data-at; data-off dims from that step */
+.b { opacity: 0; transition: opacity 600ms ease, transform 900ms cubic-bezier(.2,.7,.2,1); }
+.b.on { opacity: 1; }
+/* inside a build: .draw traces a stroke (give the path pathLength="1"), .pop grows in, .grow extends a bar from the left.
+   Stagger any of them with an inline transition-delay. */
+.b .draw { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1200ms cubic-bezier(.4,0,.2,1) 250ms; }
+.b.on .draw { stroke-dashoffset: 0; }
+.b .pop { transform: scale(0); transform-box: fill-box; transform-origin: center; transition: transform 450ms cubic-bezier(.2,1.5,.4,1) 300ms; }
+.b.on .pop { transform: scale(1); }
+.b .grow { transform: scaleX(0); transform-box: fill-box; transform-origin: left center; transition: transform 1000ms cubic-bezier(.2,.7,.2,1) 150ms; }
+.b.on .grow { transform: scaleX(1); }
+.dim { transition: opacity 600ms ease; }
+.dim.off { opacity: 0.18; }
+.gone.dim.off { opacity: 0; }
+/* .move: elements a hook moves with style.transform (dots flying from a picture into a grid) */
+.move { transition: transform 1100ms cubic-bezier(.65,0,.35,1), fill 600ms ease, opacity 600ms ease; transform-box: fill-box; }
+.reveal .fragment.step { display: none; }   /* fragments are only invisible step counters */
+
+/* title slide */
+.title-slide .bar { width: 96px; height: 8px; background: var(--a); margin-bottom: 56px; }
+.title-slide .who { font-size: 36px; margin-top: 64px; }
+.title-slide .where { font-size: 28px; color: var(--muted); margin-top: 12px; line-height: 1.45; }
+
+.reveal .progress { height: 4px; color: var(--ours); background: transparent; }
+.reveal .slide-number { background: transparent; color: var(--muted); font-size: 18px; right: 24px; bottom: 16px; }
+.reveal .controls { display: none; }
+#timing { position: fixed; right: 20px; top: 16px; z-index: 50; font: 16px/1.3 -apple-system, sans-serif; color: var(--muted); display: none; }
+#timing.show { display: block; }
+
+/* text lines that build in */
+.lines { position: absolute; left: 0; right: 0; top: 230px; }
+.lines p { font-size: 50px; line-height: 1.25; margin: 0 0 44px 0; max-width: 1500px; }
+.lines p .sub { display: block; font-size: 32px; margin-top: 10px; }
+
+/* roadmap dividers: the part list, current part lit, its research question beside it */
+.roadmap ol { position: absolute; left: 0; top: 150px; margin: 0; padding: 0; list-style: none; }
+.roadmap li { font-size: 40px; line-height: 1; margin-bottom: 34px; color: #C9CDD2; padding-left: 36px; position: relative;
+  transition: color 700ms ease, transform 900ms cubic-bezier(.2,.7,.2,1); }
+.roadmap li .rqn { font-size: 26px; margin-left: 14px; color: inherit; }
+.roadmap li.done { color: var(--muted); }
+.roadmap li::before { content: ''; position: absolute; left: 0; top: 4px; width: 8px; height: 32px; background: var(--a);
+  transform: scaleY(0); transition: transform 600ms cubic-bezier(.2,.7,.2,1) 250ms; }
+.reveal section.present.roadmap li.cur { color: var(--ink); font-weight: 600; transform: translateX(16px); }
+.reveal section.present.roadmap li.cur::before { transform: scaleY(1); }
+.roadmap .rq { position: absolute; left: 860px; right: 0; top: 230px; font-size: 52px; line-height: 1.22; font-weight: 500;
+  letter-spacing: -0.02em; opacity: 0; transition: opacity 800ms ease 500ms; }
+.roadmap .rq .tiny { display: block; font-size: 26px; font-weight: 400; margin-bottom: 26px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.reveal section.present.roadmap .rq { opacity: 1; }
+
+/* reading markers: which explanation a result slide belongs to */
+.act { display: inline-block; margin-left: 20px; padding: 3px 14px 4px; border-radius: 999px; font-size: 19px; letter-spacing: 0.06em; vertical-align: 3px; font-weight: 650; }
+.act.arch { background: #E3E6EA; color: #4A525D; }
+.act.pre { background: var(--ours); color: #fff; }
+.act.lim { background: var(--c); color: var(--ink); }
+
+/* icon rows: <i class="ic" data-ic="name"></i> is filled by helpers.js */
+i.ic { display: inline-block; width: 72px; height: 72px; vertical-align: middle; margin-right: 26px; flex: none; color: var(--ours); }
+i.ic svg { width: 100%; height: 100%; display: block; }
+.icons-list { position: absolute; left: 0; right: 0; top: 230px; }
+.irow { display: flex; align-items: center; font-size: 40px; line-height: 1.25; margin: 0 0 40px 0; }
+.irow .sub { display: block; font-size: 27px; color: var(--muted); }
+
+/* recap: one card per finding, each with a small picture; the strength card in the method colour */
+.ans3 { position: absolute; left: 0; right: 0; top: 230px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px; }
+.ans3 .ico { width: 240px; height: 120px; display: block; margin-bottom: 20px; }
+.ans3 h4 { font-size: 42px; font-weight: 650; margin: 0 0 16px 0 !important; text-transform: none; letter-spacing: -0.01em; }
+.ans3 p { font-size: 34px; line-height: 1.28; margin: 0; }
+.ans3 .ours-card h4 { color: var(--ours); }
+
+/* contributions: a few core claims in a row, the supporting evidence underneath */
+.contrib { position: absolute; top: 230px; left: 0; right: 0; }
+.contrib .core { display: flex; align-items: stretch; }
+.contrib .cbox { flex: 1; position: relative; border: 3px solid #D5D9DE; border-radius: 16px; padding: 30px 30px 24px; background: #fff; }
+.contrib .cbox.key { border-color: var(--ours); }
+.contrib .cn { position: absolute; top: -24px; left: 24px; width: 46px; height: 46px; border-radius: 50%; background: var(--ink); color: #fff;
+  font-size: 26px; font-weight: 650; display: flex; align-items: center; justify-content: center; }
+.contrib .key .cn { background: var(--ours); }
+.contrib h3 { font-size: 34px; margin-bottom: 12px; }
+.contrib .cbox > p { font-size: 25px; line-height: 1.3; color: var(--muted); margin: 0 0 14px; }
+.contrib ul { margin: 0; padding-left: 0; list-style: none; }
+.contrib li { font-size: 24px; line-height: 1.3; margin: 0 0 10px; }
+.contrib .carrow { flex: none; width: 56px; display: flex; align-items: center; justify-content: center; font-size: 44px; color: var(--muted); }
+.contrib .support { margin-top: 40px; border-top: 2px dashed #D5D9DE; padding-top: 22px; }
+.contrib .slabel { font-size: 24px; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 14px; }
+.contrib .srow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.contrib .srow b { display: block; font-size: 27px; font-weight: 600; }
+.contrib .srow span { display: block; font-size: 22px; color: var(--muted); line-height: 1.3; margin-top: 4px; }

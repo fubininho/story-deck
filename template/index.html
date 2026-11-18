@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TITLE</title>
+<link rel="stylesheet" href="vendor/reveal/reset.css">
+<link rel="stylesheet" href="vendor/reveal/reveal.css">
+<link rel="stylesheet" href="deck.css">
+<!-- The talk's parts, once. [name, optional short tag such as "Q1"]. deck.js draws the roadmap dividers from it; tools/outline.py groups the outline by it. -->
+<script id="parts" type="application/json">
+[["Context"], ["How it works"], ["First question", "Q1"], ["What it means"]]
+</script>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- Each slide: id (used in URLs and hooks), data-steps = clicks on it, data-min = planned minutes.
+     Notes: [0] before the first click, [k] after click k. outline.py appends the planned time. -->
+
+<!-- =================================================================== 1. CONTEXT -->
+
+<section id="title" class="title-slide" data-min="0.25">
+  <div class="frame" style="top:260px">
+    <div class="bar"></div>
+    <h1>TITLE</h1>
+    <h3 style="margin-top:28px;max-width:1400px">Subtitle: what the work is, in one line</h3>
+    <p class="who">Speaker</p>
+    <p class="where">Team or co-authors · date · where</p>
+  </div>
+  <aside class="notes">
+    Good morning, everyone. One sentence on who I am and whose work this is. (15 s)
+  </aside>
+</section>
+
+<section id="problem" data-steps="2" data-min="0.75">
+  <div class="frame">
+    <header><div class="kicker">Context · the question</div><h2>The question people actually ask</h2></header>
+    <div class="icons-list">
+      <p class="irow" data-at="0"><i class="ic" data-ic="eye"></i><span>What the audience would ask, in their words<span class="sub">a concrete case they recognise</span></span></p>
+      <p class="irow" data-at="1"><i class="ic" data-ic="tag"></i><span>Why it is hard today<span class="sub">one reason, said plainly</span></span></p>
+      <p class="irow" data-at="2"><i class="ic" data-ic="link"></i><span>What this work tries instead<span class="sub">one line, no method names yet</span></span></p>
+    </div>
+  </div>
+  <aside class="notes">
+    [0] Start from the question the audience already cares about.
+    [1] Say why it is hard, with one comparison, not a number.
+    [2] Then say what this work tries instead, in one line. (45 s)
+  </aside>
+</section>
+
+<section id="contrib" data-steps="3" data-min="1">
+  <div class="frame">
+    <header><div class="kicker">Context · the takeaway</div><h2>Three things to take away</h2></header>
+    <div class="contrib">
+      <div class="core">
+        <div class="cbox" data-at="0"><span class="cn">1</span><h3>The main claim</h3>
+          <p>What is new about it, in one line</p>
+          <ul><li>first change from prior work</li><li>second change</li></ul></div>
+        <div class="carrow" data-at="1">&rarr;</div>
+        <div class="cbox" data-at="1"><span class="cn">2</span><h3>What it enables</h3>
+          <p>The workflow it enables</p>
+          <ul><li>what becomes cheap</li><li>what supervision it needs</li></ul></div>
+        <div class="carrow" data-at="2">&rarr;</div>
+        <div class="cbox key" data-at="2"><span class="cn">3</span><h3>Why it works, and where not</h3>
+          <p>Every result read against a control</p>
+          <ul><li><span class="act arch">architecture</span> the control already gets it</li><li><span class="act pre">training</span> ours goes beyond</li><li><span class="act lim">limit</span> the task gives the answer away</li></ul></div>
+      </div>
+      <div class="support" data-at="3">
+        <div class="slabel">Supporting: the evidence behind them</div>
+        <div class="srow">
+          <div><b>Study A</b><span>what it shows</span></div>
+          <div><b>Study B</b><span>what it shows</span></div>
+          <div><b>Study C</b><span>what it shows</span></div>
+          <div><b>A tool</b><span>what it makes possible</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    [0] A few core claims, each one sentence. The first is the main claim.
+    [1] The second is what it enables.
+    [2] The third closes the loop: why it works, and where it does not.
+    [3] Everything else is evidence for these three. (1 min)
+  </aside>
+</section>
+
+<!-- =================================================================== 2. HOW IT WORKS -->
+
+<section id="map-method" class="roadmap" data-part="1" data-min="0.15">
+  <aside class="notes">
+    Before the results, how it works. (9 s)
+  </aside>
+</section>
+
+<section id="analogy" data-steps="4" data-min="1">
+  <div class="frame">
+    <header><div class="kicker">How it works · the idea</div><h2>A story before the diagram</h2></header>
+    <div class="stage"><svg id="analogy-svg" viewBox="0 0 1664 706"></svg></div>
+  </div>
+  <aside class="notes">
+    [0] Tell the idea as a story first. Part of the picture is covered.
+    [1] An expert saw everything and describes the covered parts in her own words.
+    [2] A learner sees only the rest and guesses what she will say.
+    [3] He keeps changing his guesses until the difference is small.
+    [4] Now the same picture with the technical names on it. (1 min)
+  </aside>
+</section>
+
+<section id="pipeline" data-steps="5" data-min="1.25">
+  <div class="frame">
+    <header><div class="kicker">How it works · the mechanism</div><h2>Into the model and back to the picture</h2></header>
+    <div class="stage"><svg id="pipeline-svg" viewBox="0 0 1664 706"></svg></div>
+  </div>
+  <aside class="notes">
+    [0] Start from one real moment of the data.
+    [1] It becomes tokens: every item at every moment.
+    [2] The tokens go through the layers, one after the other.
+    [3] Inside each layer, heads look in their own ways. Say these weights are an illustration if they are.
+    [4] What comes out is one vector per token.
+    [5] And here is what one token listened to, drawn back on the picture. (1.25 min)
+  </aside>
+</section>
+
+<section id="control" data-steps="2" data-min="0.75">
+  <div class="frame">
+    <header><div class="kicker">How it works · how to read the results</div><h2>The control, before any result</h2></header>
+    <div class="icons-list">
+      <p class="irow" data-at="0"><i class="ic" data-ic="dice"></i><span>The same network, left untrained<span class="sub">read exactly like ours; the only difference is the training</span></span></p>
+      <p class="irow" data-at="1"><i class="ic" data-ic="chip"></i><span>What the control reaches, the architecture gives<span class="sub">both belong to the method</span></span></p>
+      <p class="irow" data-at="2"><i class="ic" data-ic="value"></i><span>What ours adds on top, the training gives<span class="sub">the control tells the two apart; it does not make either pointless</span></span></p>
+    </div>
+  </div>
+  <aside class="notes">
+    [0] Before any result, the control. It is the same network, left untrained.
+    [1] Whatever it reaches, we credit to the architecture.
+    [2] Whatever ours adds on top, we credit to training. The control is how we tell the two apart. (45 s)
+  </aside>
+</section>
+
+<!-- =================================================================== 3. FIRST QUESTION -->
+
+<section id="map-rq1" class="roadmap" data-part="2" data-rq="The first question the audience would ask, in their words?" data-min="0.15">
+  <aside class="notes">
+    First question. Read it as written. (9 s)
+  </aside>
+</section>
+
+<section id="result" data-steps="3" data-min="1">
+  <div class="frame">
+    <header><div class="kicker">Q1 · the result<span class="act pre">training</span></div><h2>Ours is ahead of the control</h2></header>
+    <div class="stage"><svg id="result-svg" viewBox="0 0 1664 706"></svg></div>
+    <div class="foot" data-at="3">One line on how it was measured: test split, paired comparison.</div>
+  </div>
+  <aside class="notes">
+    [0] Say what is measured, and where better is. The simple baseline sits here.
+    [1] The untrained control is already ahead of it. That part is the architecture.
+    [2] And ours goes further. That part is the training.
+    [3] So: ahead of both. (1 min)
+  </aside>
+</section>
+
+<section id="ans-rq1" data-steps="2" data-min="0.75">
+  <div class="frame">
+    <header><div class="kicker">Answer to Q1</div><h2>The answer, in one line</h2></header>
+    <div class="ans3">
+      <div data-at="0" class="ours-card">
+        <svg class="ico" viewBox="0 0 240 120"><rect x="20" y="20" width="200" height="22" rx="5" fill="#12827A"/><rect x="20" y="52" width="150" height="22" rx="5" fill="#9AA0A6"/><rect x="20" y="84" width="100" height="22" rx="5" fill="#E3A008"/></svg>
+        <h4>The strength</h4><p>What ours does that the control does not.</p></div>
+      <div data-at="1">
+        <svg class="ico" viewBox="0 0 240 120"><rect x="20" y="30" width="170" height="26" rx="5" fill="#9AA0A6"/><rect x="20" y="66" width="170" height="26" rx="5" fill="#12827A"/></svg>
+        <h4>The tie</h4><p>Where the control already gets there.</p></div>
+      <div data-at="2">
+        <svg class="ico" viewBox="0 0 240 120"><rect x="20" y="30" width="200" height="26" rx="5" fill="#E3A008"/><rect x="20" y="66" width="140" height="26" rx="5" fill="#12827A"/></svg>
+        <h4>The caveat</h4><p>Where it loses, kept on the slide.</p></div>
+    </div>
+  </div>
+  <aside class="notes">
+    [0] The answer to the first question. The strength first.
+    [1] Then where the control already gets there.
+    [2] And the caveat, said plainly. Then lead into the next question. (45 s)
+  </aside>
+</section>
+
+<!-- =================================================================== 4. WHAT IT MEANS -->
+
+<section id="map-disc" class="roadmap" data-part="3" data-min="0.15">
+  <aside class="notes">
+    So what does it all add up to? (9 s)
+  </aside>
+</section>
+
+<section id="open" data-steps="2" data-min="0.5">
+  <div class="frame">
+    <header><div class="kicker">What it means · limits<span class="act lim">limit</span></div><h2>Where it stops paying</h2></header>
+    <div class="icons-list">
+      <p class="irow" data-at="0"><i class="ic" data-ic="forecast"></i><span>When the task already gives the answer<span class="sub">training from scratch catches up</span></span></p>
+      <p class="irow" data-at="1"><i class="ic" data-ic="test"></i><span>When the target is written in the inputs<span class="sub">a simple baseline leads</span></span></p>
+    </div>
+    <p class="foot" data-at="2">Still open: the question we cannot answer yet, stated as open.</p>
+  </div>
+  <aside class="notes">
+    [0] The other side of the same reason: it stops paying when the task already gives the answer.
+    [1] And when the target is written in the inputs.
+    [2] Some things are still open, and I will say them as open. (30 s)
+  </aside>
+</section>
+
+<section id="conclusion" data-steps="2" data-min="0.75">
+  <div class="frame">
+    <header><div class="kicker">What it means</div><h2>One line per question</h2></header>
+    <div class="lines">
+      <p data-at="0">Q1: the answer, as the recap slide put it.</p>
+      <p data-at="1">The headline in one sentence.</p>
+      <p data-at="2" class="ours">Thank you.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    [0] To conclude, one line per research question.
+    [1] So the headline in one sentence.
+    [2] Thank you very much. I am happy to take your questions. (45 s)
+  </aside>
+</section>
+
+</div></div>
+
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="slides/helpers.js"></script>
+<script src="slides/charts.js"></script>
+<script src="slides/example.js"></script>
+<script src="deck.js"></script>
+</body>
+</html>
