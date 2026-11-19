@@ -5,6 +5,7 @@
 
 Serves the deck on 127.0.0.1 (never a public address) for the duration. Step 0 is the slide before any click;
 step k is after k clicks (Reveal fragment index k-1 in the URL). Set CHROME to the browser binary if it is not found.
+tools/export.py reuses these functions to build PDF, PowerPoint and Keynote files.
 """
 import functools
 import glob
@@ -17,7 +18,6 @@ import threading
 from pathlib import Path
 
 D = Path(__file__).resolve().parents[1]
-OUT = D / 'shots'
 
 
 def find_chrome():
@@ -34,28 +34,41 @@ def find_chrome():
     raise SystemExit('No headless Chrome found. Install one (npx playwright install chromium-headless-shell) or set CHROME.')
 
 
-def main():
-    only = set(sys.argv[1:])
+def slides():
+    """[(id, steps)] in deck order, read from index.html."""
     html = (D / 'index.html').read_text()
-    slides = [(sid, int(m.group(1)) if (m := re.search(r'data-steps="(\d+)"', a)) else 0)
-              for sid, a in re.findall(r'<section id="([^"]+)"([^>]*)>', html)]
+    return [(sid, int(m.group(1)) if (m := re.search(r'data-steps="(\d+)"', a)) else 0)
+            for sid, a in re.findall(r'<section id="([^"]+)"([^>]*)>', html)]
+
+
+def serve():
+    """Serve the deck folder on a free loopback port; returns (server, port)."""
     class Quiet(http.server.SimpleHTTPRequestHandler):
         def log_message(self, *a):
             pass
-    handler = functools.partial(Quiet, directory=str(D))
-    srv = http.server.ThreadingHTTPServer(('127.0.0.1', 0), handler)
+    srv = http.server.ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(Quiet, directory=str(D)))
     threading.Thread(target=srv.serve_forever, daemon=True).start()
-    port, chrome = srv.server_address[1], find_chrome()
-    OUT.mkdir(exist_ok=True)
-    for i, (sid, steps) in enumerate(slides, 1):
+    return srv, srv.server_address[1]
+
+
+def shoot(chrome, port, sid, n, png):
+    frag = f'/{n - 1}' if n else ''
+    subprocess.run([chrome, '--headless', '--hide-scrollbars', '--force-device-scale-factor=1', '--window-size=1920,1080',
+                    '--virtual-time-budget=4000', f'--screenshot={png}', f'http://127.0.0.1:{port}/index.html#/{sid}{frag}'],
+                   check=True, capture_output=True)
+
+
+def main():
+    only, out = set(sys.argv[1:]), D / 'shots'
+    srv, port = serve()
+    chrome = find_chrome()
+    out.mkdir(exist_ok=True)
+    for i, (sid, steps) in enumerate(slides(), 1):
         if only and sid not in only:
             continue
         for n in range(steps + 1):
-            frag = f'/{n - 1}' if n else ''
-            png = OUT / f'{i:02d}-{sid}-{n}.png'
-            subprocess.run([chrome, '--headless', '--hide-scrollbars', '--force-device-scale-factor=1', '--window-size=1920,1080',
-                            '--virtual-time-budget=4000', f'--screenshot={png}', f'http://127.0.0.1:{port}/index.html#/{sid}{frag}'],
-                           check=True, capture_output=True)
+            png = out / f'{i:02d}-{sid}-{n}.png'
+            shoot(chrome, port, sid, n, png)
             print(png.relative_to(D))
     srv.shutdown()
 

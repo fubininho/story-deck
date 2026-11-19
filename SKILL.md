@@ -99,6 +99,22 @@ python3 tools/shoot.py pipeline   # only the slides you changed
 
 It serves the deck on `127.0.0.1` and runs headless Chrome at 1920×1080 on `#/<id>` (step 0) and `#/<id>/<k-1>` (step k), with a virtual time budget so transitions finish. Look at each PNG for text over text, labels over lines, titles that wrap into the stage, anything past the right edge, and steps that look identical. A contact sheet of all shots makes a full pass quick. Keep `shots/` gitignored.
 
+## Export
+
+The HTML deck is the master. When the user needs a file to send, upload or present from another machine, export it:
+
+```bash
+python3 tools/export.py pdf             # one page per slide, as it looks after its last click
+python3 tools/export.py pdf --steps     # one page per click, as a handout of every build step
+python3 tools/export.py pptx            # PowerPoint, one slide per click, each with that click's speaker notes
+python3 tools/export.py pptx --final    # one slide per slide, with its full notes
+python3 tools/export.py key             # Keynote: the pptx above, imported and saved by Keynote (macOS only)
+```
+
+Files land in `export/` (gitignored). Every page is a 1920×1080 picture of the rendered slide, so the export looks exactly like the browser, but its text cannot be edited, and animation becomes one page per click: clicking through the pptx or key file replays the build. Timers (layers lighting in turn, chips taking turns) freeze at the moment of the screenshot, so say so if the user plans to present from the export. pptx and key need `pip install python-pptx`; key also needs Keynote, and macOS asks once for permission to control it. If the user needs editable slides in PowerPoint or Keynote, say that this route does not give them, and offer the pptx skill to rebuild the text slides natively.
+
+An export contains whatever the slides show, so the Privacy rules apply to the file too.
+
 ## Privacy
 
 Talks often show data that cannot leave the team: customer records, tracking data, video, internal metrics. Keep it in a gitignored folder, serve only on `127.0.0.1`, and never put it into a public URL, an artifact, a gist, a shared doc or a commit. Before publishing any preview, check that its slides use no such data, and ask the user first. Pictures drawn from illustrative positions, as in the template, are safe to share; frames from real data are not.
