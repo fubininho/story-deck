@@ -5,32 +5,34 @@ description: The craft of a presentation, from finding the story to animated sli
 
 # Story deck
 
-This skill covers two crafts: finding the story a talk should tell, and making each slide tell its part of it so the eye follows without effort. The output is one HTML file of slides, each revealed click by click, with pictures drawn in code and speaker notes for every click. It started from a research talk that went through many rounds of feedback, but nothing here is specific to academic talks. A findings readout for a product team uses the same moves.
+This skill covers two crafts: finding the story a talk should tell, and making each slide tell its part of it so the eye follows without effort. The output is one HTML file of slides, each revealed click by click, with pictures drawn in code and speaker notes for every click. It fits work readouts and academic talks alike.
 
-Three ideas run through everything below. The audience follows a story, not a list of results. A concrete case comes before any abstraction. Animation says "this, then this" and never decorates.
+Four ideas run through everything below. The talk serves a decision, so it shows what the audience needs to take it and leaves out how the work was built. The audience follows a story, not a list of results. A concrete case comes before any abstraction. Animation says "this, then this" and never decorates.
 
 ## Find the story
 
-Often the material exists (notebooks, query results, a report, a paper, a pile of charts) but the message does not yet. Find it before making any slide, because every later choice depends on it.
+Often the material exists but the message does not yet. Work through these steps in order before making any slide. Steps 1, 3 and 4 wait for the user's answer.
 
-1. Ask who is in the room and what they should know, believe or do afterwards. A director deciding whether to fund a model, a team that will maintain a pipeline, and an examination committee need different talks from the same results. Also ask how long the talk is, what the audience already knows, and anything that must not be said or shown.
-2. Read the material and list what was actually found, each item in one plain sentence, with its evidence and how strong that evidence is. Include what did not work and what is still unknown. Don't polish yet.
-3. Draft two or three candidate headlines: one sentence each that a listener could repeat to a colleague afterwards. ("Churn is driven by the first week, not by price." "One pretrained model serves every task, and we can tell which part of the gain comes from training.") Show them to the user and pick one together. If none holds up, the analysis is not finished, and saying so is more useful than a deck.
-4. From the chosen headline, write the questions the audience would ask, in the order they would ask them. Each question becomes a section. In a research talk these are the research questions; in a work readout they are things like "how big is it?", "why does it happen?", "what do we do?".
-5. Choose the reference point every claim is read against: a baseline, last quarter, the current process, doing nothing, an untrained copy of the model. A number means little until the audience knows what it is compared with.
+1. Audience gate. Stop here before reading any material or drafting anything, and ask the user for (a) the audience and what they already know, (b) the decision the meeting should take, and (c) the time slot, including time for discussion. Ask too what must not be said or shown. What the user wrote in the request counts as an answer; what you infer from files, memory or the topic does not. If one of the three is missing or vague, ask for it again instead of assuming, and do nothing else until all three are in, even if the user is in a hurry. If you opened material while loading this skill, say so and draw nothing from it yet. A lecture or a defence has a decision too: what the listeners do next, or what the committee has to be convinced of.
+2. Read the material and list what was actually found, each item in one plain sentence, with its evidence and how strong that evidence is. Include what did not work and what is still unknown.
+3. Produced versus needed. Split that list in two: "what I produced" and "what this audience needs to take the decision". An item is needed only if the decision would change or stall without it, however much work it took. A limitation that could change the decision is always needed. Only the second list reaches the main slides. Everything else goes to the backup list (`BACKUP.md` beside the deck). If the decision needs something nobody produced, record it as a gap. Show the user both lists and get their OK.
+4. Draft two or three candidate headlines from the needed list: one sentence each that a listener could repeat to a colleague afterwards. ("Churn is driven by the first week, not by price.") Pick one with the user. If none holds up, the analysis is not finished, and saying so is more useful than a deck.
+5. Inversion exercise. Building starts in the details and ends at the result. Presenting runs the other way: the decision first, then the practical priorities, then the few details the decision needs. Write the talk in the order the work was built, then turn it round. Before: "We joined three sources, tried four models and tuned the best. It predicts which accounts will leave, so we could call them." After: "Approve a one-month trial of calling the accounts on this list. Call the largest first, with one person owning the calls. The list catches about two in three leavers and is weak on new accounts."
+6. Write the questions the audience would ask, in that inverted order. Each question becomes a section: "what should we do?", "what does that rest on?", "what could go wrong?" in a work readout, the research questions in a research talk.
+7. Choose the reference point every claim is read against: a baseline, last quarter, the current process, doing nothing, an untrained copy of the model. A number means little until the audience knows what it is compared with.
 
-When the user already has a thesis and questions, check them with steps 3 to 5 anyway: a headline that cannot be said in one sentence will not survive the talk.
+When the user already has a thesis and questions, the gate still comes first, and steps 3 to 7 check them.
 
 ## Pick a shape
 
-Pick the shape that fits the audience and the headline, then fill it with beats (next section). These are the common ones:
+Pick the shape that fits the audience and the headline, then fill it with beats (next section). In every shape the decision opens the talk and the next MVP closes it; the shape orders what comes between. No shape replays how the work was done.
 
 - Question-led. Each section answers one of the audience's questions; a divider states it and a recap answers it. Good for research talks and any deep dive.
-- Situation, complication, resolution. What is normal, what went wrong or changed, what to do about it. Good for findings that lead to a decision.
-- Investigation. We noticed something, suspected a cause, checked it, and found something else. Good for discovery work, because the audience relives the reasoning and believes the ending.
-- Incremental build-up. Start from the simplest result, then improve it in small steps, one change and one new result at a time, until you reach the solution. Good for modelling work and any solution that came from many small decisions.
-- Before and after. Where things were, what was built, where things are now, what it cost. Good for project updates and demos.
-- Options and recommendation. The decision, the options side by side against the same criteria, the pick and its risks. Good for a decision meeting.
+- Situation, complication, resolution. The resolution in one line first, then what is normal and what changed, so the room sees why it follows. Good for findings that lead to a decision.
+- Investigation. The finding first, then the one or two explanations the room would raise and the check that settles each. Good for discovery work the audience might doubt.
+- Incremental build-up. The result first, then the steps that lead to it as options: what each adds, what it costs, where the room could stop. Good when the decision is how far to go.
+- Before and after. Where things are now, where they were, what that changes for this audience, what it cost. Good for project updates and demos.
+- Options and recommendation. The pick, then the options side by side against the same criteria, and the risks of the pick. Good for a decision meeting.
 
 Long talks can nest shapes: a question-led talk whose sections are each small investigations.
 
@@ -39,28 +41,30 @@ Long talks can nest shapes: a question-led talk whose sections are each small in
 A beat is one move of the story, usually one slide or one click. Use the ones a point needs, in an order that keeps the concrete before the abstract:
 
 - The question, in the audience's words. "Which past cases look like this one?" lands; "retrieval evaluation" does not.
-- A concrete case. A real example from the data (kept local, see Privacy), an analogy told as a story, a live view, one customer's timeline. A model that learns by predicting hidden parts of its input can be told as an expert who saw everything describing the covered parts in her own words, while a learner who saw only the rest guesses what she will say, and the gap between the two shrinks. Only on the last click do the technical names appear over the same picture.
-- The mechanism, drawn on that same case: how the data goes in and what comes back out, ideally drawn back onto the original picture.
+- A concrete case. A real example from the data (kept local, see Privacy), an analogy told as a story, a live view, one customer's timeline. An analogy runs as a story first; the technical names appear over the same picture only on the last click.
+- The mechanism, drawn on that same case, when the decision depends on how it works: how the data goes in and what comes back out, ideally drawn back onto the original picture. Otherwise it is backup.
 - The evidence: one chart, one message, with the reference point on it.
 - What it means, in one line, usually the slide title or a footer.
 
-Order findings with the strongest first and keep the weak ones and the losses visible. A recap that shows the strength, the tie and the caveat side by side earns more trust than one that leaves the caveat out. Treat the reference point as a way to read the result: if a simple baseline or an untrained copy already gets part of the way, say what that part is and what the method adds beyond it. Never frame a strong baseline as making the work pointless, unless that is the honest finding, and then it is the headline.
+Order findings by how much they weigh on the decision, and keep the losses that bear on it visible. A recap that shows the strength, the tie and the caveat side by side earns more trust than one that leaves the caveat out. Treat the reference point as a way to read the result: if a simple baseline or an untrained copy already gets part of the way, say what that part is and what the method adds beyond it. Never frame a strong baseline as making the work pointless, unless that is the honest finding, and then it is the headline.
 
-Close with where the approach stops working, what is still open (stated as open, never as a guess dressed as an answer), and one line per section. The early "what you will take away" slide works best as a few core claims in a row with the supporting evidence underneath. Six equal boxes read as a list; three with evidence below read as an argument.
+The opening slide states the decision, with a few core claims in a row and the evidence it needs underneath. Six equal boxes read as a list; three with evidence below read as an argument.
 
-`references/story.md` walks through one full deck slide by slide and shows how the same beats map onto other kinds of talk.
+Near the end, say the main limitation and what is still open (stated as open, never as a guess dressed as an answer). The last slide is the next MVP: what it is, what it needs from this audience, and which gaps remain after it.
+
+`references/story.md` walks through one full deck as a catalogue of slide kinds and shows the beats in three work talks.
 
 ## Build the deck
 
-1. Copy the template into the project: `cp -R ~/.claude/skills/story-deck/template <project>/presentation`. It runs offline (reveal.js 5.1.0 is vendored) and has one example of each slide kind above.
+1. Copy the template into the project: `cp -R ~/.claude/skills/story-deck/template <project>/presentation`. It runs offline (reveal.js 5.1.0 is vendored) and its example slides show slide kinds, not the order of a talk.
 2. Serve it on loopback only: `cd presentation && python3 -m http.server 8090 --bind 127.0.0.1`, then open `http://127.0.0.1:8090`. Keys: arrows or space to step, S for the speaker view with notes and timer, T for elapsed time against the plan, O for the overview.
 3. Set the sections in `<script id="parts">` in `index.html`. The divider slides and `tools/outline.py` both read it.
-4. Plan slides and time before drawing. Give each slide an id and a planned length (`data-min`), leave the notes empty, and run `python3 tools/outline.py`. It writes `OUTLINE.md` with the running clock and prints the total. About 45 seconds per ordinary slide, 1 to 1.5 minutes for a schematic that builds in five steps, 10 seconds for a divider. Cut slides now, not after they are drawn.
-5. Keep `FACTS.md` beside the deck: every number on a slide and where it came from (a query, a notebook cell, a report line). Someone will check a number, and a mismatch found live costs more than the time this takes.
-6. Build each slide click by click with the helpers in `references/animation.md`. Delete the example slides as you replace them.
-7. Write the notes per click, then run `tools/outline.py` again.
-8. Render every step and look at it (Verification) before showing the user anything.
-9. Run the humanizer skill on the notes and any Markdown prose. Notes are read aloud, so AI tells are heard by the whole room.
+4. Plan the core and its time before drawing. The core is the decision, what we found, what it means, the main limitation and the next MVP, and nothing else yet. Give each slide an id and a planned length (`data-min`), leave the notes empty, and run `python3 tools/outline.py`. It writes `OUTLINE.md` and prints the total. Keep the total within about two thirds of the slot (20 minutes of a 30-minute slot); the rest is discussion. About 45 seconds per ordinary slide, 1 to 1.5 minutes for a schematic that builds in five steps, 10 seconds for a divider. Cut slides now, not after they are drawn.
+5. Keep `FACTS.md` beside the deck: every number on a slide and where it came from (a query, a notebook cell, a report line).
+6. Build the core slides click by click with the helpers in `references/animation.md`. Delete the example slides as you replace them.
+7. Write the notes per click, run the humanizer skill on them (the room hears AI tells), and run `tools/outline.py` again.
+8. Render every step and look at it (Verification), then show the user the core.
+9. Ask where they want more detail, offering the backup list as options with the minutes each would add. Add detail only where they say so, through steps 4 to 8, and check the new total against the slot each time. If a detail would go past two thirds, name what to cut and get an answer before adding it.
 
 ## Numbers and names
 
@@ -72,7 +76,7 @@ Close with where the approach stops working, what is still open (stated as open,
 
 Write notes inside each slide's `<aside class="notes">`. `[0]` is what to say before the first click and `[k]` what to say after click k, so the speaker view always matches the screen. Write spoken English: connectors ("so", "now", "and this is why"), one idea per sentence, comparisons instead of numbers. Say when a picture is an illustration rather than real output. End each slide on a sentence that leads into the next.
 
-`tools/outline.py` reads `data-min` and the notes, rewrites the time mark at the end of each note (`(45 s)`), and regenerates `OUTLINE.md` and `SCRIPT.md` with the clock at the end of every slide. Run it after every edit to notes or timing.
+`tools/outline.py` rewrites the time mark at the end of each note (`(45 s)`) and regenerates `OUTLINE.md` and `SCRIPT.md`. Run it after every edit to notes or timing.
 
 If the user wants the script as a shared document (to comment on, or in a second language), create it through the first-party docs connector when one is attached, one tab per language. After any change to the notes, update every language tab in the same turn, and bring comments made there back into `index.html` before regenerating.
 
@@ -80,7 +84,7 @@ If the user wants the script as a shared document (to comment on, or in a second
 
 Each slide declares its clicks (`data-steps="N"`). Anything with `data-at="k"` appears at step k, and `data-off="k"` dims it from step k. Inside an appearing group, `.pop` grows elements in, `.draw` traces strokes, `.grow` extends bars, and an inline `transition-delay` staggers them so items arrive one after another. Motion that appear and dim cannot express (dots flying from a picture into a grid, layers lighting in sequence, chips taking turns) goes in `SLIDE_HOOKS[id] = n => {...}`, which runs on every step in both directions.
 
-A good schematic shows the mechanism moving, one movement per sentence of the notes. In one model slide, the data picture turned into a grid of tokens (dots flew into the newest column, then the grid popped in column by column), eight layers popped in one after another and then lit in turn on a timer, four head chips took turns with a caption for each, and what one item attended to was drawn back on the original picture. The template's `pipeline` slide is a data-free version. The same moves fit a data pipeline, a funnel, or a system diagram.
+A good schematic shows the mechanism moving, one movement per sentence of the notes. The template's `pipeline` slide shows the moves: dots fly from the picture into a grid, layers pop in and light in turn, chips take turns with a caption, and the result is drawn back on the picture. The same moves fit a data pipeline, a funnel, or a system diagram.
 
 Read `references/animation.md` before drawing: helper API, motion recipes, chart specs, layout sizes and timer rules.
 
@@ -97,11 +101,11 @@ python3 tools/shoot.py            # every slide, every step -> shots/NN-<id>-<st
 python3 tools/shoot.py pipeline   # only the slides you changed
 ```
 
-It serves the deck on `127.0.0.1` and runs headless Chrome at 1920×1080 on `#/<id>` (step 0) and `#/<id>/<k-1>` (step k), with a virtual time budget so transitions finish. Look at each PNG for text over text, labels over lines, titles that wrap into the stage, anything past the right edge, and steps that look identical. A contact sheet of all shots makes a full pass quick. Keep `shots/` gitignored.
+It serves the deck on `127.0.0.1` and runs headless Chrome at 1920×1080 on `#/<id>` (step 0) and `#/<id>/<k-1>` (step k). Look at each PNG for text over text, labels over lines, titles that wrap into the stage, anything past the right edge, and steps that look identical. A contact sheet of all shots makes a full pass quick. Keep `shots/` gitignored.
 
 ## Export
 
-The HTML deck is the master. When the user needs a file to send, upload or present from another machine, export it:
+The HTML deck is the master. Export it when the user needs a file to send or present from another machine:
 
 ```bash
 python3 tools/export.py pdf             # one page per slide, as it looks after its last click
@@ -111,7 +115,7 @@ python3 tools/export.py pptx --final    # one slide per slide, with its full not
 python3 tools/export.py key             # Keynote: the pptx above, imported and saved by Keynote (macOS only)
 ```
 
-Files land in `export/` (gitignored). Every page is a 1920×1080 picture of the rendered slide, so the export looks exactly like the browser, but its text cannot be edited, and animation becomes one page per click: clicking through the pptx or key file replays the build. Timers (layers lighting in turn, chips taking turns) freeze at the moment of the screenshot, so say so if the user plans to present from the export. pptx and key need `pip install python-pptx`; key also needs Keynote, and macOS asks once for permission to control it. If the user needs editable slides in PowerPoint or Keynote, say that this route does not give them, and offer the pptx skill to rebuild the text slides natively.
+Files land in `export/` (gitignored). Every page is a 1920×1080 picture of the rendered slide, so it looks like the browser, but its text cannot be edited and animation becomes one page per click. Timers freeze at the moment of the screenshot; say so if the user plans to present from the export. pptx and key need `pip install python-pptx`; key also needs Keynote, and macOS asks once for permission to control it. If the user needs editable slides, say that this route does not give them, and offer the pptx skill.
 
 An export contains whatever the slides show, so the Privacy rules apply to the file too.
 
@@ -121,4 +125,4 @@ Talks often show data that cannot leave the team: customer records, tracking dat
 
 ## Prose
 
-Slide text, notes, `README.md` and any write-up go through the humanizer skill. On slides the target is short noun phrases and plain verbs; in notes it is how the speaker talks. Keep the user's own wording where they gave it, and translate only when asked.
+Slide text, notes and any write-up go through the humanizer skill. On slides aim for short noun phrases and plain verbs; in notes, for how the speaker talks. Keep the user's own wording where they gave it, and translate only when asked.

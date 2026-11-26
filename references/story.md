@@ -1,6 +1,6 @@
 # One deck, slide by slide, and other talks with the same beats
 
-Sections 1 to 6 walk through one long research talk (about 70 slides and 50 minutes, presenting a machine-learning model and what it can be used for), a question-led talk. It is one worked example, not a required structure. Section 7 shows the same beats in three other talks. Slide ids are examples; use your own.
+Sections 1 to 6 walk through one long research talk (about 70 slides and 50 minutes, presenting a machine-learning model and what it can be used for), a question-led talk. Take the slide kinds from it. Its order and length predate the rules in SKILL.md (audience gate, decision first, core first, next MVP last), and SKILL.md wins where they differ. Section 7 shows three talks that follow the rules. Slide ids are examples; use your own.
 
 ## Contents
 
@@ -71,34 +71,37 @@ These came from rounds of feedback on that deck and are the reason for most rule
 
 ## 7. Same beats, other talks
 
-### A findings readout (investigation shape, 15 minutes)
+Each is a core deck, timed to two thirds of the slot. The backup line lists what the user was offered as detail.
 
-A data scientist found why a metric moved and has to tell the product team. The headline came from the material: "Most of the drop in retention comes from users who never finish setup in their first week."
+### A findings readout (investigation shape, 15-minute slot, 10 of talk)
 
-- The question in the team's words: "Why did retention fall this quarter?" with the curve drawn in, last quarter in grey.
-- One concrete user: a timeline of a single (anonymised, illustrative) user who signed up, stalled at one setup step and left. The audience now has a person to hold on to.
-- What was suspected first (price, a release) and the check that ruled it out, one chart each. Showing the dead ends is what makes the ending believable.
+A data scientist found why a metric moved, and the product team has to decide what to fix. The headline: "Most of the drop in retention comes from users who never finish setup in their first week."
+
+- The decision and the finding on one slide: "Fix the setup step this quarter?", with the retention curve and last quarter in grey.
+- One concrete user (anonymised, illustrative) who signed up, stalled at one setup step and left.
 - The finding: the drop split by "finished setup in week one" or not, the two groups built in one after another.
-- The mechanism: the setup funnel drawn as boxes, with users flowing through and dropping at the step that changed.
-- What it means and what to do: one recommendation, the expected size rounded ("about a third of the drop"), and what is still unknown.
-- Notes say "most of", "about twice as likely", not the raw rates; the rates are on the slide.
+- The explanation the room will raise (price) and the one check that settles it.
+- What it means: the expected size, rounded ("about a third of the drop"), and the main limitation.
+- Next MVP: a shorter setup step for one group of new users. It needs one engineer from this team. The gap left: whether older users would come back.
+- Backup: the setup funnel, the other explanations that were checked, the query definitions.
 
-### A project update (before and after, 10 minutes)
+### A project update (before and after, 15-minute slot, 10 of talk)
 
-- Where things were: the old process as a diagram, the pain point marked.
-- What was built: the new pipeline drawn as a schematic that animates one record through it, like the model slide's tokens.
-- Where things are now: one chart against the old process, which is the reference point here.
-- What it cost and what is left: limits and open items, stated plainly.
-- The ask: the decision or help needed from the room, on its own slide.
+- The decision: extend the new pipeline to a second team or wait.
+- Where things are now against the old process, on one chart.
+- What changes for this audience: one record followed through, only as far as they touch it.
+- What it cost, and the main limitation.
+- Next MVP: the second team, what it needs from the room, the gaps that remain after it.
+- Backup: the pipeline schematic, the parts that were built and dropped, running costs by month.
 
-### A model that got better step by step (incremental build-up, 12 minutes)
+### How far to take a model (incremental build-up, 15-minute slot, 10 of talk)
 
-The work was a long run of small changes, and the talk retells them as a ladder. One chart stays on screen across several slides and gains one row per step.
+The room has to choose where to stop. One chart stays on screen, and each row is an option.
 
-- The task and how it is scored, with the score of doing nothing drawn in grey.
-- Step 1, the simplest model that works at all: its dot appears on the chart, and the slide title says what it is ("a linear model on the raw features").
-- Each next step, one per slide or one per click: name the single change in plain words ("add the week-one features", "train on all regions together"), show one concrete example of what the change fixes, then the new dot, with the gain written beside it, rounded ("about +0.03").
-- Steps that did not help stay on the ladder, greyed, with one line on why. The audience then trusts that the steps that did help were tested the same way.
-- The last step is the solution, in the method colour, with the full gap from the starting point written once.
-- Close on which steps mattered most, so the audience leaves with two or three changes, not ten.
-- In the deck, build the ladder with one `dotChart` whose rows carry `at: k`, so each click adds a row and the earlier ones stay visible for comparison.
+- The decision and the recommended stopping point, its dot in the method colour, with doing nothing in grey.
+- Each step that bears on the choice, one per click: the change in plain words ("add the week-one features"), what it adds, rounded ("about +0.03"), and what it costs.
+- A step that adds nothing stays, greyed, only if the room would otherwise ask for it.
+- The main limitation of the recommended step.
+- Next MVP: that step running for one region, what it needs from this audience, the gaps left.
+- Backup: the remaining steps, the order they were tried in, how each was tuned.
+- In the deck, one `dotChart` whose rows carry `at: k` adds a row per click and keeps the earlier ones visible.
