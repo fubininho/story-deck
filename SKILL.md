@@ -103,6 +103,22 @@ python3 tools/shoot.py pipeline   # only the slides you changed
 
 It serves the deck on `127.0.0.1` and runs headless Chrome at 1920×1080 on `#/<id>` (step 0) and `#/<id>/<k-1>` (step k). Look at each PNG for text over text, labels over lines, titles that wrap into the stage, anything past the right edge, and steps that look identical. A contact sheet of all shots makes a full pass quick. Keep `shots/` gitignored.
 
+## Edit mode
+
+People can change the words themselves, without asking Claude for each change:
+
+```bash
+python3 tools/edit.py     # opens http://127.0.0.1:8765 with the slide text and the notes editable
+```
+
+Click any text and type. Notes opens the slide's speaker notes, which are editable too. Cmd/Ctrl+S writes the edits into `index.html` and leaves the rest of the file as it was. While editing, every build step shows at once. Add slide puts a plain draft (title, bullets, notes, `class="draft"`) after the current slide, and Delete draft removes one. Text drawn by code (schematics, charts, the outline on divider slides) still goes through Claude. To work on one deck together, each person runs edit mode on their own copy and shares changes through git. Offer edit mode when the user wants to reword slides themselves or several people will work on the deck.
+
+After someone has edited:
+
+- Read `index.html` again (and `git diff`, if the deck is in git) before changing anything. Keep their words unless asked to change them, and never rewrite a slide from an earlier copy. An open page can still save after you edit; its edits land only where the text they replace is unchanged.
+- To animate the drafts, take each `section.draft` in turn. Keep the person's words, decide what appears on each click, and turn the bullets into the slide kind that fits (icon rows, a schematic, a chart). Add `data-steps`, `data-at` and `[k]` notes, set `data-min`, replace the "Draft" kicker, give the slide an id that says what it is, and remove `class="draft"`. Ask before rewording, and put any new number in `FACTS.md`. Then go through Verification and show the result.
+- Run `tools/outline.py` again: titles, notes and drafts (half a minute each) change the time plan.
+
 ## Export
 
 The HTML deck is the master. Export it when the user needs a file to send or present from another machine:

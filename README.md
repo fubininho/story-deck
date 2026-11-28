@@ -8,6 +8,7 @@ It works for any talk built on evidence: a data-science findings readout, a disc
 - pick a story shape (question-led, investigation, incremental build-up, before and after, and others) and fill it with beats that put a concrete case before any abstraction
 - build the slides as one offline HTML file, with schematics drawn in code, charts with rounded numbers written inline, and speaker notes for every click
 - keep a timed script and render every build step headless to check for overlaps
+- let people edit the slide text and notes in the browser and add plain draft slides, which Claude animates later
 - export the deck as PDF, PowerPoint (with the speaker notes) or Keynote
 
 ## Install
@@ -26,6 +27,8 @@ Claude Code picks it up in the next session. Ask for slides, a deck or a talk ("
 - `references/story.md`: one full deck walked through slide by slide, plus three other talks built from the same beats.
 - `references/animation.md`: the build system, SVG helpers, motion recipes and chart specs.
 - `template/`: a working starter deck with one example of each slide kind. It runs offline; reveal.js 5.1.0 is vendored under its MIT licence.
+
+To change the words yourself, run `python3 tools/edit.py` inside the deck folder: click any text, type, and save with Cmd/Ctrl+S. Add slide creates a plain draft; ask Claude to animate the drafts when you are done.
 
 The template needs Python 3 to serve and to run its tools. `tools/shoot.py` and `tools/export.py` also need a headless Chrome (for example `npx playwright install chromium-headless-shell`). The PowerPoint and Keynote exports need `pip install python-pptx`, and the Keynote one runs only on a Mac with Keynote installed.
 

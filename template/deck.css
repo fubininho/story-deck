@@ -133,3 +133,7 @@ i.ic svg { width: 100%; height: 100%; display: block; }
 .contrib .srow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
 .contrib .srow b { display: block; font-size: 27px; font-weight: 600; }
 .contrib .srow span { display: block; font-size: 22px; color: var(--muted); line-height: 1.3; margin-top: 4px; }
+
+/* draft slides added in edit mode (tools/edit.py): a title and plain bullets until Claude animates them */
+.draft-body { position: absolute; left: 1.2em; right: 0; top: 230px; margin: 0; font-size: 40px; line-height: 1.35; max-width: 1500px; }
+.draft-body li { margin-bottom: 24px; }
